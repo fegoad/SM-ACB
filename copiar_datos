@@ -1,0 +1,128 @@
+Sub copiar_datos()
+
+Dim i As Integer
+Dim rngb As Range
+Dim rngbend As Range
+Dim rnga As Range
+Dim rngaend As Range
+Dim rngp As Range
+Dim rngpend As Range
+Dim LastColumn As Integer
+
+
+Worksheets.Add(After:=Worksheets(Worksheets.Count)).Name = "Bases"
+Worksheets.Add(After:=Worksheets(Worksheets.Count)).Name = "Aleros"
+Worksheets.Add(After:=Worksheets(Worksheets.Count)).Name = "Pivots"
+
+
+Application.ScreenUpdating = True
+
+i = 0
+
+'Tabla Bases
+
+Application.Sheets("Datos").Select
+
+Do While Sheets("Datos").Range("A1").Offset(i, 0) <> "Jug"
+
+    Sheets("Datos").Range("A1").Offset(i + 1, 0).Select
+    i = i + 1
+
+Loop
+
+i = i + 1
+
+' Encuentra la última columna de la tabla
+LastColumn = Cells(i + 2, Columns.Count).End(xlToLeft).Column
+
+'Inicio tabla bases
+Set rngb = Sheets("Datos").Range("A1").Offset(i + 1, 0)
+rngb.Name = "iniTablaB"
+
+
+'Tabla Al
+Do While Sheets("Datos").Range("A1").Offset(i, 0) <> "Jug"
+
+    Sheets("Datos").Range("A1").Offset(i + 1, 0).Select
+    i = i + 1
+
+Loop
+
+'Final tabla bases
+Set rngbend = Sheets("Datos").Range("A1").Offset(i - 1, LastColumn - 1)
+rngbend.Name = "endTablaB"
+
+'Seleccionar, copiar y pegar tabla Bases
+
+Sheets("Bases").Cells.Clear
+Sheets("Datos").Range("iniTablaB:endTablaB").Copy
+Sheets("Bases").Range("A3").PasteSpecial xlValues
+Application.CutCopyMode = False
+Worksheets("Bases").Activate
+
+Call eliminar_espacios_bases
+
+i = i + 1
+
+Worksheets("Datos").Activate
+
+'Inicio tabla aleros
+Set rnga = Sheets("Datos").Range("A1").Offset(i + 1, 0)
+rnga.Name = "iniTablaA"
+
+'Tabla Pi
+
+Do While Sheets("Datos").Range("A1").Offset(i, 0) <> "Jug"
+
+    Sheets("Datos").Range("A1").Offset(i + 1, 0).Select
+    i = i + 1
+
+Loop
+
+'Final tabla Aleros
+Set rngaend = Sheets("Datos").Range("A1").Offset(i - 1, LastColumn - 1)
+rngaend.Name = "endTablaA"
+
+'Seleccionar, copiar y pegar tabla Aleros
+Sheets("Aleros").Cells.Clear
+Sheets("Datos").Range("iniTablaA:endTablaA").Copy
+Sheets("Aleros").Range("A3").PasteSpecial xlValues
+Application.CutCopyMode = False
+
+Worksheets("Aleros").Activate
+
+Call eliminar_espacios_aleros
+
+Worksheets("Datos").Activate
+
+i = i + 1
+
+'Inicio tabla Pivots
+Set rngp = Sheets("Datos").Range("A1").Offset(i + 1, 0)
+rngp.Name = "iniTablaP"
+
+
+'Llegar hasta el final de la selección
+
+Do While Sheets("Datos").Range("A1").Offset(i, 0) <> "Copyright © El Rincón del SuperManager - 2006-2018"
+
+    Sheets("Datos").Range("A1").Offset(i + 1, 0).Select
+    i = i + 1
+
+Loop
+
+'Final tabla Pivots
+Set rngpend = Sheets("Datos").Range("A1").Offset(i - 1, LastColumn - 1)
+rngpend.Name = "endTablaP"
+
+'Seleccionar, copiar y pegar tabla Pivots
+Sheets("Pivots").Cells.Clear
+Sheets("Datos").Range("iniTablaP:endTablaP").Copy
+Sheets("Pivots").Range("A3").PasteSpecial xlValues
+Application.CutCopyMode = False
+
+Worksheets("Pivots").Activate
+
+Call eliminar_espacios_pivots
+
+End Sub
