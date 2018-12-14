@@ -1,0 +1,60 @@
+Public Sub eliminar_espacios_bases()
+
+Dim i As Integer
+Dim j As Integer
+Dim lastrow As Integer
+
+
+i = 0
+
+' Encuentra la última columna de la tabla
+LastColumn = Cells(i + 3, Columns.Count).End(xlToLeft).Column
+
+'Primeras dos columnas
+
+Sheets("Bases").Range("A1").Offset(i, 0).Select
+lastrow = WorksheetFunction.CountA(Sheets("Bases").Range("A:A"))
+
+
+For j = 0 To (lastrow)
+
+    If IsEmpty(Sheets("Bases").Range("A1").Offset(i, 0)) = True Then
+        Sheets("Bases").Range("A1:B1").Offset(i, 0).Select
+        Sheets("Bases").Range("A1:B1").Offset(i, 0).Delete
+        i = i + 1
+    Else
+        Sheets("Bases").Range("A1:B1").Offset(i, 0).Select
+        i = i + 1
+    End If
+    
+lastrow = Range("A1000").End(xlUp).Row
+    
+Next
+
+'Resto columnas
+
+i = 0
+
+Sheets("Bases").Range("C1").Offset(i, 0).Select
+lastrow = WorksheetFunction.CountA(Sheets("Bases").Range("C:C"))
+
+
+For j = 0 To (lastrow)
+
+    If IsEmpty(Sheets("Bases").Range("C1").Offset(i, 0)) = True Then
+        Sheets("Bases").Range("C1:R1").Offset(i, 0).Select
+        Sheets("Bases").Range("C1:R1").Offset(i, 0).Delete
+        i = i + 1
+    Else
+        Sheets("Bases").Range("C1:R1").Offset(i, 0).Select
+        i = i + 1
+    End If
+    
+lastrow = Range("C1000").End(xlUp).Row
+    
+Next
+
+Sheets("Bases").Range("A1").Select
+
+
+End Sub
