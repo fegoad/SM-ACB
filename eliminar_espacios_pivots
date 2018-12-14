@@ -1,0 +1,59 @@
+Public Sub eliminar_espacios_pivots()
+
+Dim i As Integer
+Dim j As Integer
+Dim lastrow As Integer
+
+i = 0
+
+' Encuentra la última columna de la tabla
+LastColumn = Cells(i + 3, Columns.Count).End(xlToLeft).Column
+
+'Primeras dos columnas
+
+Application.Worksheets("Pivots").Range("A1").Offset(i, 0).Select
+lastrow = WorksheetFunction.CountA(Sheets("Pivots").Range("A:A"))
+
+
+For j = 0 To (lastrow)
+
+    If IsEmpty(Sheets("Pivots").Range("A1").Offset(i, 0)) = True Then
+        Sheets("Pivots").Range("A1:B1").Offset(i, 0).Select
+        Sheets("Pivots").Range("A1:B1").Offset(i, 0).Delete
+        i = i + 1
+    Else
+        Sheets("Pivots").Range("A1:B1").Offset(i, 0).Select
+        i = i + 1
+    End If
+    
+lastrow = Range("A1000").End(xlUp).Row
+    
+Next
+
+'Resto columnas
+
+i = 0
+
+Sheets("Pivots").Range("C1").Offset(i, 0).Select
+lastrow = WorksheetFunction.CountA(Sheets("Pivots").Range("C:C"))
+
+
+For j = 0 To (lastrow)
+
+    If IsEmpty(Sheets("Pivots").Range("C1").Offset(i, 0)) = True Then
+        Sheets("Pivots").Range("C1:R1").Offset(i, 0).Select
+        Sheets("Pivots").Range("C1:R1").Offset(i, 0).Delete
+        i = i + 1
+    Else
+        Sheets("Pivots").Range("C1:R1").Offset(i, 0).Select
+        i = i + 1
+    End If
+    
+lastrow = Range("C1000").End(xlUp).Row
+    
+Next
+
+Sheets("Pivots").Range("A1").Select
+
+
+End Sub
